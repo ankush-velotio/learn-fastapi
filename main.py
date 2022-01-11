@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -24,3 +25,15 @@ async def say_hello(name: str):
     """This function says hello"""
 
     return {"message": f"Hello {name}"}
+
+
+class User(BaseModel):
+    name: str
+    email: str
+
+
+@app.post("/user")
+async def create_user(user: User):
+    """This function creates new user"""
+
+    return user
